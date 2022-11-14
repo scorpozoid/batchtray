@@ -1,7 +1,13 @@
 #ifndef BATCHTRAYMAINWINDOW_H
 #define BATCHTRAYMAINWINDOW_H
 
+#ifndef QT_NO_DEBUG
+#include <QDebug>
+#endif // QT_NO_DEBUG
 #include <QMainWindow>
+#include <QIcon>
+#include <QPixmap>
+#include <QColor>
 #include <QProcess>
 #include <QString>
 #include <QPlainTextEdit>
@@ -24,10 +30,13 @@ public:
 
     void setLimit(const int value);
 
+
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void start();
     void stop();
-    void minimize();
     /// Check process is active
     bool active();
     /// Check settings (command) is valid
@@ -49,4 +58,4 @@ private:
     void setupTrayIcon();
 
 };
-#endif // BATCHTRAYMAINWINDOW_H
+#endif /* BATCHTRAYMAINWINDOW_H */

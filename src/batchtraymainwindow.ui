@@ -35,7 +35,8 @@
     </property>
     <addaction name="actionStart"/>
     <addaction name="actionStop"/>
-    <addaction name="actionMinimize"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuStart"/>
   </widget>
@@ -50,9 +51,9 @@
     <string>Stop</string>
    </property>
   </action>
-  <action name="actionMinimize">
+  <action name="actionExit">
    <property name="text">
-    <string>Minimize</string>
+    <string>Exit</string>
    </property>
   </action>
  </widget>

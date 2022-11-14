@@ -1,8 +1,3 @@
-#include <QDebug>
-#include <QIcon>
-#include <QPixmap>
-#include <QColor>
-
 #include "batchtraymainwindow.h"
 #include "ui_batchtraymainwindow.h"
 
@@ -12,14 +7,11 @@ BatchTrayMainWindow::BatchTrayMainWindow(QWidget *parent)
     , ui(new Ui::BatchTrayMainWindow)
 {
     ui->setupUi(this);
-
     ui->plainTextEdit->setReadOnly(true);
-
     setupTrayIcon();
-
     connect(ui->actionStart, &QAction::triggered, this, &BatchTrayMainWindow::start);
     connect(ui->actionStop, &QAction::triggered, this, &BatchTrayMainWindow::stop);
-    connect(ui->actionMinimize, &QAction::triggered, this, &BatchTrayMainWindow::minimize);
+    connect(ui->actionExit, &QAction::triggered, this, &QMainWindow::close);
 }
 
 BatchTrayMainWindow::~BatchTrayMainWindow()
@@ -40,6 +32,15 @@ QString BatchTrayMainWindow::command()
 void BatchTrayMainWindow::setLimit(const int value)
 {
     m_log_limit = value;
+}
+
+void BatchTrayMainWindow::closeEvent(QCloseEvent *event)
+{
+    log("Closing....");
+    hide();
+    if (active())
+        stop();
+    event->accept();
 }
 
 void BatchTrayMainWindow::start()
@@ -93,14 +94,9 @@ void BatchTrayMainWindow::stop()
     // 'Are you sure terminate batch [Y/N]?'
 
     m_process.terminate();
-    m_process.waitForFinished(7000);
+    m_process.waitForFinished(4500);
 
     m_process.close();
-}
-
-void BatchTrayMainWindow::minimize()
-{
-    //
 }
 
 bool BatchTrayMainWindow::active()
@@ -136,8 +132,10 @@ void BatchTrayMainWindow::readOutput()
     while(m_process.canReadLine()) {
         const auto line = m_process.readLine();
         log(line);
+#ifndef QT_NO_DEBUG
         qDebug() << line;
-    }
+#endif // QT_NO_DEBUG
+   }
 }
 
 void BatchTrayMainWindow::logline(QPlainTextEdit *edit, const QString &line)
@@ -161,7 +159,10 @@ void BatchTrayMainWindow::logline(QPlainTextEdit *edit, const QString &line)
 void BatchTrayMainWindow::log(const QString &line)
 {
     logline(ui->plainTextEdit, line);
+    m_icon.setToolTip(line);
+#ifndef QT_NO_DEBUG
     qDebug() << line;
+#endif // QT_NO_DEBUG
 }
 
 void BatchTrayMainWindow::on_show_hide(QSystemTrayIcon::ActivationReason reason)
@@ -188,11 +189,11 @@ void BatchTrayMainWindow::setupTrayIcon()
     QPixmap pixmap(16, 16);
     pixmap.fill(Qt::GlobalColor::red);
     m_icon.setIcon(QIcon(pixmap));
-    m_icon.setToolTip("!!!!");
+    m_icon.setToolTip("");
 
-    QMenu * menu = new QMenu(this);
-    QAction * viewWindow = new QAction(trUtf8("Развернуть окно"), this);
-    QAction * quitAction = new QAction(trUtf8("Выход"), this);
+    QMenu *menu = new QMenu(this);
+    QAction *viewWindow = new QAction(trUtf8("Развернуть окно"), this);
+    QAction *quitAction = new QAction(trUtf8("Выход"), this);
 
     connect(viewWindow, &QAction::triggered, this, &QMainWindow::show);
     connect(quitAction, &QAction::triggered, this, &QMainWindow::close);
