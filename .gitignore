@@ -1,3 +1,10 @@
+src/.qmake*
+src/*.pro.user
+src/ui_*
+src/Makefile*
+src/debug/*
+src/release/*
+
 # Prerequisites
 *.d
 
