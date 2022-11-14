@@ -40,6 +40,7 @@ private:
     Ui::BatchTrayMainWindow *ui;
     QProcess m_process;
     QString m_command;
+    QSystemTrayIcon m_icon;
     int m_log_limit{100};
 
     void logline(QPlainTextEdit *edit, const QString &line);

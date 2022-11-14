@@ -183,19 +183,16 @@ void BatchTrayMainWindow::on_show_hide(QSystemTrayIcon::ActivationReason reason)
 
 void BatchTrayMainWindow::setupTrayIcon()
 {
-    auto trayIcon = new QSystemTrayIcon(this);
-    // trayIcon->setIcon(this->style()->standardIcon(QStyle::SP_ComputerIcon));
-    // trayIcon->setIcon(QIcon(":/appicon"));
+    // m_icon.setIcon(this->style()->standardIcon(QStyle::SP_ComputerIcon));
+    // m_icon.setIcon(QIcon(":/appicon"));
     QPixmap pixmap(16, 16);
     pixmap.fill(Qt::GlobalColor::red);
-    trayIcon->setIcon(QIcon(pixmap));
-    trayIcon->setToolTip("!!!!");
+    m_icon.setIcon(QIcon(pixmap));
+    m_icon.setToolTip("!!!!");
 
     QMenu * menu = new QMenu(this);
     QAction * viewWindow = new QAction(trUtf8("Развернуть окно"), this);
     QAction * quitAction = new QAction(trUtf8("Выход"), this);
-
-    connect(ui->actionStop, &QAction::triggered, this, &BatchTrayMainWindow::stop);
 
     connect(viewWindow, &QAction::triggered, this, &QMainWindow::show);
     connect(quitAction, &QAction::triggered, this, &QMainWindow::close);
@@ -203,11 +200,9 @@ void BatchTrayMainWindow::setupTrayIcon()
     menu->addAction(viewWindow);
     menu->addAction(quitAction);
 
-    trayIcon->setContextMenu(menu);
-    trayIcon->show();
+    m_icon.setContextMenu(menu);
+    m_icon.show();
 
- // OKAY --    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &BatchTrayMainWindow::on_show_hide);
+    connect(&m_icon, &QSystemTrayIcon::activated, this, &BatchTrayMainWindow::on_show_hide);
 }
 
