@@ -1,3 +1,3 @@
 # batchtray
 
-Minimize batch to tray
+Minimize MS_DOS batch to tray
