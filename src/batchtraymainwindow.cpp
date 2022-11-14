@@ -39,7 +39,7 @@ QString BatchTrayMainWindow::command()
 
 void BatchTrayMainWindow::setLimit(const int value)
 {
-    m_limit = value;
+    m_log_limit = value;
 }
 
 void BatchTrayMainWindow::start()
@@ -142,7 +142,7 @@ void BatchTrayMainWindow::readOutput()
 
 void BatchTrayMainWindow::logline(QPlainTextEdit *edit, const QString &line)
 {
-    while (m_limit < edit->document()->lineCount()) {
+    while (m_log_limit < edit->document()->lineCount()) {
         QTextCursor cursor = edit->textCursor();
         cursor.movePosition(QTextCursor::Start);
         cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, 0);
