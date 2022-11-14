@@ -5,6 +5,7 @@
 #include <QProcess>
 #include <QString>
 #include <QPlainTextEdit>
+#include <QSystemTrayIcon>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class BatchTrayMainWindow; }
@@ -34,6 +35,7 @@ private slots:
 
     void readOutput();
 
+    void on_show_hide(QSystemTrayIcon::ActivationReason reason);
 private:
     Ui::BatchTrayMainWindow *ui;
     QProcess m_process;

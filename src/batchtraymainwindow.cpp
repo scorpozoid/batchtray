@@ -1,5 +1,4 @@
 #include <QDebug>
-#include <QSystemTrayIcon>
 #include <QIcon>
 #include <QPixmap>
 #include <QColor>
@@ -165,6 +164,23 @@ void BatchTrayMainWindow::log(const QString &line)
     qDebug() << line;
 }
 
+void BatchTrayMainWindow::on_show_hide(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason) {
+    case QSystemTrayIcon::DoubleClick: {
+        if (isVisible()) {
+            hide();
+        } else {
+            show();
+            raise();
+            setFocus();
+        }
+        return;
+    }
+    default: return;
+    }
+}
+
 void BatchTrayMainWindow::setupTrayIcon()
 {
     auto trayIcon = new QSystemTrayIcon(this);
@@ -192,6 +208,6 @@ void BatchTrayMainWindow::setupTrayIcon()
 
  // OKAY --    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
-   //connect(trayIcon, &QSystemTrayIcon::activated, this, nullptr);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &BatchTrayMainWindow::on_show_hide);
 }
 
