@@ -35,6 +35,7 @@
     </property>
     <addaction name="actionStart"/>
     <addaction name="actionStop"/>
+    <addaction name="actionMinimize"/>
    </widget>
    <addaction name="menuStart"/>
   </widget>
@@ -47,6 +48,11 @@
   <action name="actionStop">
    <property name="text">
     <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionMinimize">
+   <property name="text">
+    <string>Minimize</string>
    </property>
   </action>
  </widget>
