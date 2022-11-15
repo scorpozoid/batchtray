@@ -28,6 +28,9 @@ copy "%MINGWBINPATH%\libstdc++-6.dll"        "%BINPATH%"
 copy "%MINGWBINPATH%\libwinpthread-1.dll"    "%BINPATH%"
 copy "%MINGWBINPATH%\libstdc++-6.dll"        "%BINPATH%"
 
+if not exist "%BINPATH%\platforms" mkdir "%BINPATH%\platforms"
+copy "%MINGWPLUGINSPATH%\platforms\qwindows.dll" "%BINPATH%\platforms"
+
 rem move "debug" ../build
 rem move "release" ../build
 

@@ -5,6 +5,7 @@ rem QTTARGET=debug
 set QTPFX=
 set QTTARGET=release
 set QTFWPATH=C:\Qt\5.11.0
+set QTFWPATH=C:\home\%USERNAME%\bin\qt-5.11.0
 set MINGWTOOLPATH=%QTFWPATH%\Tools\mingw530_32\bin
 set MINGWPATH=%QTFWPATH%\5.11.0\mingw53_32
 set MINGWBINPATH=%MINGWPATH%\bin
